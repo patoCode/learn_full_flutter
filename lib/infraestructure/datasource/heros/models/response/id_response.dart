@@ -12,7 +12,7 @@ class IdResponse {
   Appearance appearance;
   Work work;
   Connections connections;
-  Image image;
+  ImageResponse image;
 
   IdResponse({
     required this.response,
@@ -31,7 +31,6 @@ class IdResponse {
       _$IdResponseFromJson(json);
 }
 
-@JsonSerializable()
 class Appearance {
   String gender;
   String race;
@@ -48,12 +47,26 @@ class Appearance {
     required this.eyeColor,
     required this.hairColor,
   });
-  Map<String, dynamic> toJson() => _$AppearanceToJson(this);
-  factory Appearance.fromJson(Map<String, dynamic> json) =>
-      _$AppearanceFromJson(json);
+
+  factory Appearance.fromJson(Map<String, dynamic> json) => Appearance(
+    gender: json["gender"] ?? '',
+    race: json["race"] ?? '',
+    height: List<String>.from(json["height"] ?? []),
+    weight: List<String>.from(json["weight"] ?? []),
+    eyeColor: json["eye-color"] ?? '',
+    hairColor: json["hair-color"] ?? '',
+  );
+
+  Map<String, dynamic> toJson() => {
+    "gender": gender,
+    "race": race,
+    "height": List<dynamic>.from(height.map((x) => x)),
+    "weight": List<dynamic>.from(weight.map((x) => x)),
+    "eye-color": eyeColor,
+    "hair-color": hairColor,
+  };
 }
 
-@JsonSerializable()
 class Biography {
   String fullName;
   String alterEgos;
@@ -72,9 +85,26 @@ class Biography {
     required this.publisher,
     required this.alignment,
   });
-  Map<String, dynamic> toJson() => _$BiographyToJson(this);
-  factory Biography.fromJson(Map<String, dynamic> json) =>
-      _$BiographyFromJson(json);
+
+  factory Biography.fromJson(Map<String, dynamic> json) => Biography(
+    fullName: json["full-name"] ?? '',
+    alterEgos: json["alter-egos"] ?? '',
+    aliases: List<String>.from(json["aliases"] ?? []),
+    placeOfBirth: json["place-of-birth"] ?? '',
+    firstAppearance: json["first-appearance"] ?? '',
+    publisher: json["publisher"] ?? '',
+    alignment: json["alignment"] ?? '',
+  );
+
+  Map<String, dynamic> toJson() => {
+    "full-name": fullName,
+    "alter-egos": alterEgos,
+    "aliases": List<dynamic>.from(aliases.map((x) => x)),
+    "place-of-birth": placeOfBirth,
+    "first-appearance": firstAppearance,
+    "publisher": publisher,
+    "alignment": alignment,
+  };
 }
 
 @JsonSerializable()
@@ -83,19 +113,25 @@ class Connections {
   String relatives;
 
   Connections({required this.groupAffiliation, required this.relatives});
+  factory Connections.fromJson(Map<String, dynamic> json) => Connections(
+    groupAffiliation: json["group-affiliation"] ?? '',
+    relatives: json["relatives"] ?? '',
+  );
 
-  Map<String, dynamic> toJson() => _$ConnectionsToJson(this);
-  factory Connections.fromJson(Map<String, dynamic> json) =>
-      _$ConnectionsFromJson(json);
+  Map<String, dynamic> toJson() => {
+    "group-affiliation": groupAffiliation,
+    "relatives": relatives,
+  };
 }
 
 @JsonSerializable()
-class Image {
+class ImageResponse {
   String url;
 
-  Image({required this.url});
-  Map<String, dynamic> toJson() => _$ImageToJson(this);
-  factory Image.fromJson(Map<String, dynamic> json) => _$ImageFromJson(json);
+  ImageResponse({required this.url});
+  Map<String, dynamic> toJson() => _$ImageResponseToJson(this);
+  factory ImageResponse.fromJson(Map<String, dynamic> json) =>
+      _$ImageResponseFromJson(json);
 }
 
 @JsonSerializable()
